@@ -4,16 +4,13 @@ const renderPageContent = () => {
 
     console.log(container);
 
-
-
-
-
     // container.appendChild(navBar);
 }
 
 const renderProjectTitles = (arr) => {
 
     const sideBar = document.querySelector("#side-bar");
+    sideBar.innerHTML = "";
 
     for (let i = 0; i < arr.length ; i++) {
         let newItem = document.createElement("div");
@@ -31,6 +28,10 @@ const renderProjectTitles = (arr) => {
         sideBar.appendChild(newItem);
     }
 
+}
+
+const renderProjectContents = () => {
+    
 }
 
 
