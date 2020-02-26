@@ -9,9 +9,10 @@
 // separate list of todos
     // have defaults
 
-import { renderPageContent } from "./page-layout.js";
+import { renderPageContent, renderProjectTitles, renderProjectContents } from "./page-layout.js";
 
 renderPageContent();
+
 
 const Reminder = (title, description="",dueDate, priority="low") => {
     const getName = () => title;
@@ -27,12 +28,14 @@ const Project = (title) => {
     const getTitle = () => title;
 
     let todoItems = [];
+    let itemCounter = 0;
     // push reminder object(s) to array in ea project object
 
 
     // create or add reminder object to array
     const addReminder = (reminder) => {
         // const newReminder = Reminder("shower", "1", "tomorrow", "low");
+
         todoItems.push(reminder);
     }
 
@@ -45,40 +48,55 @@ const Project = (title) => {
         // find specific reminder in arr
         // call reminder.complete method
     }
-    return {todoItems, addReminder, deleteReminder}
+    return {title, todoItems, itemCounter ,addReminder, deleteReminder}
 };
 
 const controller = (() => {
     //create project(s)
     //create reminder(s)
-    let projectItems = [];
+
+    let projectList = [];
     let itemCount = 0;
+    const test = {};
+    let currentProject;
 
+
+    const selectProject = () => {
+        const sideBar = document.querySelectorAll(".project-item");
+        sideBar.forEach(element => element.addEventListener("click", () => {
+            currentProject = element.querySelector(".project-title").textContent;
+            return currentProject
+        }));
+
+    }
+ 
     const newProject = () => {
+        const p1 = Project("Reminders");
+        const p2 = Project("Things To Learn");
+        projectList.push(p1);
+        projectList.push(p2);
+        renderProjectTitles(projectList);
+    };
 
-    }
+    newProject();
+    selectProject();
 
-
+    // pass in project object?
     const newReminder = () => {
-        // create unique reminder object
-        // append reminder to project
-        // iterate itemcount
-    }
+        const addReminder = document.getElementById("task-item");
+        // test[`item-${itemCount}`] = Reminder(addReminder.value);
+        test[p1.itemCounter] = Reminder(addReminder.value);
 
+        // add new reminder to specific project
+        projectList[0].todoItems.push(test);
+        console.log(projectList);
+        // itemCount++;
+        return itemCount
+    };
 
-    let reminderButton = document.querySelector("#add-reminder");
-    let addReminder = document.querySelector("task-item");
+    // renderProjectContents();
+
+    const reminderButton = document.querySelector("#add-reminder");
     reminderButton.addEventListener("click", newReminder)
 
-
-
-
-
 })();
-
-const Project1 = Project("test");
-
-const eat = Reminder();
-Project1.addReminder();
-console.log(Project1.todoItems);
-console.log(eat.getPriority());
