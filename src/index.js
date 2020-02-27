@@ -52,54 +52,45 @@ const Project = (title) => {
 };
 
 const controller = (() => {
-    //create project(s)
-    //create reminder(s)
 
     let projectList = [];
-    let itemCount = 0;
-    const test = {};
     let currentProject;
-
-    // separate both responsibilities
+    let projectName;
+    
+    //iterate through projectlist to find matching title and return project objct
     const selectProject = () => {
-        let projectName;
+        currentProject = projectList.filter(item => item.title == projectName)[0]
+        renderProjectContents(currentProject);
+        return currentProject
+    }
+ 
+    const listenProjectNames = () => {
+
         const sideBar = document.querySelectorAll(".project-item");
+
         sideBar.forEach(element => element.addEventListener("click", () => {
             projectName = element.querySelector(".project-title").textContent;
-            console.log(projectName);
+            selectProject();
             return projectName
         }));
 
-        for (let i = 0; i < projectList.length; i++) {
-            if (projectList[i].title == projectName) {
-                currentProject = projectList[i];
-                console.log(currentProject);
-                return currentProject
-            }
-        }
     }
- 
-    //iterate through projectlist to find matching title and return project objct
-
-
+    
     const newProject = () => {
         const addProject = document.getElementById("project-item");
-        projectList.push(Reminder(addProject.value));
+        projectList.push(Project(addProject.value));
         renderProjectTitles(projectList);
+        listenProjectNames();
     };
 
-    // pass in project object?
-    const newReminder = (currentProject) => {
+    const newReminder = () => {
+        
         const addReminder = document.getElementById("task-item");
-        // console.log(currentProject);
-        // test[`item-${itemCount}`] = Reminder(addReminder.value);
-        test[currentProject.itemCounter] = Reminder(addReminder.value);
 
-        // add new reminder to specific project
-        currentProject.todoItems.push(test);
+        currentProject.todoItems.push(Reminder(addReminder.value));
+        currentProject.itemCounter++;
+
         console.log(projectList);
-        // itemCount++;
-        return itemCount
     };
 
     const projectButton = document.querySelector("#add-project");
@@ -108,7 +99,10 @@ const controller = (() => {
     const reminderButton = document.querySelector("#add-reminder");
     reminderButton.addEventListener("click", newReminder)
 
-    projectList.push(Reminder("Reminders"));
+    projectList.push(Project("Reminders"));
     renderProjectTitles(projectList);
     renderProjectContents(projectList[0]);
+    projectName = projectList[0].title;
+    selectProject();
+
 })();
