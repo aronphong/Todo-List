@@ -60,43 +60,55 @@ const controller = (() => {
     const test = {};
     let currentProject;
 
-
+    // separate both responsibilities
     const selectProject = () => {
+        let projectName;
         const sideBar = document.querySelectorAll(".project-item");
         sideBar.forEach(element => element.addEventListener("click", () => {
-            currentProject = element.querySelector(".project-title").textContent;
-            return currentProject
+            projectName = element.querySelector(".project-title").textContent;
+            console.log(projectName);
+            return projectName
         }));
 
+        for (let i = 0; i < projectList.length; i++) {
+            if (projectList[i].title == projectName) {
+                currentProject = projectList[i];
+                console.log(currentProject);
+                return currentProject
+            }
+        }
     }
  
+    //iterate through projectlist to find matching title and return project objct
+
+
     const newProject = () => {
-        const p1 = Project("Reminders");
-        const p2 = Project("Things To Learn");
-        projectList.push(p1);
-        projectList.push(p2);
+        const addProject = document.getElementById("project-item");
+        projectList.push(Reminder(addProject.value));
         renderProjectTitles(projectList);
     };
 
-    newProject();
-    selectProject();
-
     // pass in project object?
-    const newReminder = () => {
+    const newReminder = (currentProject) => {
         const addReminder = document.getElementById("task-item");
+        // console.log(currentProject);
         // test[`item-${itemCount}`] = Reminder(addReminder.value);
-        test[p1.itemCounter] = Reminder(addReminder.value);
+        test[currentProject.itemCounter] = Reminder(addReminder.value);
 
         // add new reminder to specific project
-        projectList[0].todoItems.push(test);
+        currentProject.todoItems.push(test);
         console.log(projectList);
         // itemCount++;
         return itemCount
     };
 
-    // renderProjectContents();
+    const projectButton = document.querySelector("#add-project");
+    projectButton.addEventListener("click", newProject);
 
     const reminderButton = document.querySelector("#add-reminder");
     reminderButton.addEventListener("click", newReminder)
 
+    projectList.push(Reminder("Reminders"));
+    renderProjectTitles(projectList);
+    renderProjectContents(projectList[0]);
 })();
