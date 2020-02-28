@@ -30,9 +30,32 @@ const renderProjectTitles = (arr) => {
 
 }
 
-const renderProjectContents = () => {
-    
+// pass in project object to display
+const renderProjectContents = (project) => {
+
+    const todoItems = project.todoItems;
+
+    const content = document.querySelector("#content");
+    content.innerHTML = "";
+
+    const title = document.createElement("h1");
+    title.id = "project-title";
+    title.textContent = project.title;
+
+    const reminders = document.createElement("div");
+    reminders.id = "reminder-items";
+
+    const remindersList = document.createElement("ul");
+
+    for (let i = 0; i < todoItems.length; i++) {
+        const listItem = document.createElement("li");
+        listItem.textContent = todoItems[i].title;
+        remindersList.appendChild(listItem);
+    }
+
+    content.appendChild(title);
+    content.appendChild(reminders);
+    reminders.appendChild(remindersList);
 }
 
-
-export { renderPageContent, renderProjectTitles };
+export { renderPageContent, renderProjectTitles, renderProjectContents };
