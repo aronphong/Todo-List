@@ -1,12 +1,3 @@
-const renderPageContent = () => {
-
-    const container = document.querySelector("#container");
-
-    console.log(container);
-
-    // container.appendChild(navBar);
-}
-
 const renderProjectTitles = (arr) => {
 
     const sideBar = document.querySelector("#side-bar");
@@ -39,17 +30,27 @@ const renderProjectContents = (project) => {
     content.innerHTML = "";
 
     const title = document.createElement("h1");
-    title.id = "project-title";
+    title.id = "current-title";
     title.textContent = project.title;
 
     const reminders = document.createElement("div");
-    reminders.id = "reminder-items";
+    reminders.id = "current-items";
 
     const remindersList = document.createElement("ul");
+    remindersList.id = "reminders-list";
 
     for (let i = 0; i < todoItems.length; i++) {
         const listItem = document.createElement("li");
-        listItem.textContent = todoItems[i].title;
+        const listDiv = document.createElement("div");
+
+        const reminderTitle = document.createElement("h3");
+        reminderTitle.textContent = todoItems[i].title;
+
+        const reminderDescription = document.createElement("p");
+        reminderDescription.textContent = todoItems[i].description;
+
+        listItem.appendChild(reminderTitle);
+        listItem.appendChild(reminderDescription);
         remindersList.appendChild(listItem);
     }
 
@@ -58,4 +59,18 @@ const renderProjectContents = (project) => {
     reminders.appendChild(remindersList);
 }
 
-export { renderPageContent, renderProjectTitles, renderProjectContents };
+const createReminderInput = () => {
+
+    const remindersList = document.getElementById("reminders-list");
+    const listItem = document.createElement("li");
+
+    const reminderInput = document.createElement("input");
+    reminderInput.type ="text";
+    reminderInput.id = "task-item";
+
+    listItem.appendChild(reminderInput);
+    remindersList.appendChild(listItem);
+    reminderInput.focus();
+}
+
+export { renderProjectTitles, renderProjectContents, createReminderInput };

@@ -1,20 +1,6 @@
-// create factory for task objects
-    // title
-    // description
-    // dueDate
-    // priority
-    // notes?
-    // checkist?
+import { renderProjectTitles, renderProjectContents, createReminderInput } from "./page-layout.js";
 
-// separate list of todos
-    // have defaults
-
-import { renderPageContent, renderProjectTitles, renderProjectContents } from "./page-layout.js";
-
-renderPageContent();
-
-
-const Reminder = (title, description="",dueDate, priority="low") => {
+const Reminder = (title, description="-",dueDate, priority="low") => {
     const getName = () => title;
     const getDescription = () => description;
     const getDueDate = () => dueDate;
@@ -85,13 +71,23 @@ const controller = (() => {
 
     const newReminder = () => {
         
-        const addReminder = document.getElementById("task-item");
+        const addReminder = () => {
+            currentProject.todoItems.push(Reminder(newTask.value));
+            currentProject.itemCounter++;
+            renderProjectContents(currentProject);
+        }
 
-        currentProject.todoItems.push(Reminder(addReminder.value));
-        currentProject.itemCounter++;
+        createReminderInput();
 
-        console.log(projectList);
-    };
+        const newTask = document.getElementById("task-item");
+        newTask.addEventListener("blur", addReminder);
+        
+        // newTask.addEventListener("keydown", () => {
+        //     if (event.key === "Enter") {
+        //         addReminder();
+        //     }
+        // });
+    }
 
     const projectButton = document.querySelector("#add-project");
     projectButton.addEventListener("click", newProject);
@@ -101,6 +97,7 @@ const controller = (() => {
 
     projectList.push(Project("Reminders"));
     renderProjectTitles(projectList);
+    listenProjectNames();
     renderProjectContents(projectList[0]);
     projectName = projectList[0].title;
     selectProject();
