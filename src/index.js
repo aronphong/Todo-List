@@ -1,6 +1,6 @@
 import { renderProjectTitles, renderProjectContents, createReminderInput } from "./page-layout.js";
 
-const Reminder = (title, description="-",dueDate, priority="low") => {
+const Reminder = (title, description,dueDate, priority="low") => {
     const getName = () => title;
     const getDescription = () => description;
     const getDueDate = () => dueDate;
@@ -61,11 +61,8 @@ const controller = (() => {
         const addProject = document.getElementById("project-item");
 
         if (addProject.value != "") {
-
             let checkName = projectList.findIndex(element => element.title == addProject.value);
-            
             if (checkName == -1) {
-
                 projectList.push(Project(addProject.value));
                 renderProjectTitles(projectList);
                 listenProjectNames();
@@ -76,10 +73,12 @@ const controller = (() => {
     const newReminder = () => {
     
         const addReminder = () => {
-            currentProject.todoItems.push(Reminder(newTask.value));
-            currentProject.itemCounter++;
+            if (newTask.value != "") {
+                currentProject.todoItems.push(Reminder(newTask.value));
+                currentProject.itemCounter++;
+            } 
             renderProjectContents(currentProject);
-        }
+        };
 
         createReminderInput();
 
