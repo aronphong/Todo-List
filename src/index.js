@@ -15,13 +15,9 @@ const Project = (title) => {
 
     let todoItems = [];
     let itemCounter = 0;
-    // push reminder object(s) to array in ea project object
-
 
     // create or add reminder object to array
     const addReminder = (reminder) => {
-        // const newReminder = Reminder("shower", "1", "tomorrow", "low");
-
         todoItems.push(reminder);
     }
 
@@ -43,7 +39,6 @@ const controller = (() => {
     let currentProject;
     let projectName;
     
-    //iterate through projectlist to find matching title and return project objct
     const selectProject = () => {
         currentProject = projectList.filter(item => item.title == projectName)[0]
         renderProjectContents(currentProject);
@@ -51,10 +46,9 @@ const controller = (() => {
     }
  
     const listenProjectNames = () => {
-
         const sideBar = document.querySelectorAll(".project-item");
-
         sideBar.forEach(element => element.addEventListener("click", () => {
+            // element.id = "selected-project";
             projectName = element.querySelector(".project-title").textContent;
             selectProject();
             return projectName
@@ -63,14 +57,24 @@ const controller = (() => {
     }
     
     const newProject = () => {
+
         const addProject = document.getElementById("project-item");
-        projectList.push(Project(addProject.value));
-        renderProjectTitles(projectList);
-        listenProjectNames();
+
+        if (addProject.value != "") {
+
+            let checkName = projectList.findIndex(element => element.title == addProject.value);
+            
+            if (checkName == -1) {
+
+                projectList.push(Project(addProject.value));
+                renderProjectTitles(projectList);
+                listenProjectNames();
+            }
+        }
     };
 
     const newReminder = () => {
-        
+    
         const addReminder = () => {
             currentProject.todoItems.push(Reminder(newTask.value));
             currentProject.itemCounter++;
