@@ -39,9 +39,9 @@ const renderProjectContents = (project) => {
     const remindersList = document.createElement("ul");
     remindersList.id = "reminders-list";
 
+    // render each reminder item
     for (let i = 0; i < todoItems.length; i++) {
         const listItem = document.createElement("li");
-        const listDiv = document.createElement("div");
 
         const reminderTitle = document.createElement("h3");
         reminderTitle.textContent = todoItems[i].title;
@@ -49,6 +49,10 @@ const renderProjectContents = (project) => {
         const reminderDescription = document.createElement("p");
         reminderDescription.textContent = todoItems[i].description;
 
+        const priorityStatus = document.createElement("button");
+        priorityStatus.className = `priority ${todoItems[i].priority}`;
+
+        listItem.appendChild(priorityStatus);
         listItem.appendChild(reminderTitle);
         listItem.appendChild(reminderDescription);
         remindersList.appendChild(listItem);
@@ -67,8 +71,22 @@ const createReminderInput = () => {
     const reminderInput = document.createElement("input");
     reminderInput.type ="text";
     reminderInput.id = "task-item";
+    reminderInput.maxLength="50";
 
+    const priorityHigh = document.createElement("button");
+    priorityHigh.className = "priority high";
+
+    const priorityMed = document.createElement("button");
+    priorityMed.className = "priority medium";
+
+    const priorityLow = document.createElement("button");
+    priorityLow.className = "priority low";
+
+    listItem.appendChild(priorityLow);
+    listItem.appendChild(priorityMed);
+    listItem.appendChild(priorityHigh);
     listItem.appendChild(reminderInput);
+
     remindersList.appendChild(listItem);
     reminderInput.focus();
 }

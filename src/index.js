@@ -1,6 +1,6 @@
 import { renderProjectTitles, renderProjectContents, createReminderInput } from "./page-layout.js";
 
-const Reminder = (title, description,dueDate, priority="low") => {
+const Reminder = (title, priority="low", description, dueDate) => {
     const getName = () => title;
     const getDescription = () => description;
     const getDueDate = () => dueDate;
@@ -72,9 +72,13 @@ const controller = (() => {
 
     const newReminder = () => {
     
+        let priorityStatus;
+
         const addReminder = () => {
-            if (newTask.value != "") {
-                currentProject.todoItems.push(Reminder(newTask.value));
+
+            if (taskItem.value != "") {
+                currentProject.todoItems.push(Reminder(taskItem.value, priorityStatus));
+                console.log(currentProject.todoItems);
                 currentProject.itemCounter++;
             } 
             renderProjectContents(currentProject);
@@ -82,15 +86,27 @@ const controller = (() => {
 
         createReminderInput();
 
-        const newTask = document.getElementById("task-item");
-        newTask.addEventListener("blur", addReminder);
+        const taskItem = document.getElementById("task-item");
+        taskItem.addEventListener("keydown", () => {
+            if (event.key === "Enter") {
+                addReminder();
+            }
+        });
+
+        // listen for priority click
+        const priorityButtons = document.querySelectorAll(".priority");
+        priorityButtons.forEach(element => element.addEventListener("click", () => {
+            priorityStatus = element.className.split(" ")[1];
+            addReminder();
+        }));
+    
+    };
+
+    // get project, get reminder and pop
+    const deleteReminder = () => {
+
         
-        // newTask.addEventListener("keydown", () => {
-        //     if (event.key === "Enter") {
-        //         addReminder();
-        //     }
-        // });
-    }
+    };
 
     const projectButton = document.querySelector("#add-project");
     projectButton.addEventListener("click", newProject);
