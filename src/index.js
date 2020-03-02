@@ -48,7 +48,6 @@ const controller = (() => {
     const listenProjectNames = () => {
         const sideBar = document.querySelectorAll(".project-item");
         sideBar.forEach(element => element.addEventListener("click", () => {
-            // element.id = "selected-project";
             projectName = element.querySelector(".project-title").textContent;
             selectProject();
             return projectName
@@ -73,18 +72,17 @@ const controller = (() => {
     const newReminder = () => {
     
         let priorityStatus;
+        createReminderInput();
+        reminderButton.disabled = true;
 
         const addReminder = () => {
-
             if (taskItem.value != "") {
                 currentProject.todoItems.push(Reminder(taskItem.value, priorityStatus));
-                console.log(currentProject.todoItems);
                 currentProject.itemCounter++;
-            } 
+            }
+            reminderButton.disabled = false; 
             renderProjectContents(currentProject);
         };
-
-        createReminderInput();
 
         const taskItem = document.getElementById("task-item");
         taskItem.addEventListener("keydown", () => {
