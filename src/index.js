@@ -1,4 +1,5 @@
 import { renderProjectTitles, renderProjectContents, createReminderInput } from "./page-layout.js";
+import { removeReminders } from "./removeReminders.js";
 
 const Reminder = (title, priority="low", description, dueDate) => {
     const getName = () => title;
@@ -26,10 +27,6 @@ const Project = (title) => {
         todoItems.pop(index);
     }
 
-    const completeReminder = (reminder) => {
-        // find specific reminder in arr
-        // call reminder.complete method
-    }
     return {title, todoItems, itemCounter ,addReminder, deleteReminder}
 };
 
@@ -82,6 +79,7 @@ const controller = (() => {
             }
             reminderButton.disabled = false; 
             renderProjectContents(currentProject);
+            listenFinishedReminders();
         };
 
         const taskItem = document.getElementById("task-item");
@@ -101,9 +99,16 @@ const controller = (() => {
     };
 
     // get project, get reminder and pop
-    const deleteReminder = () => {
+    const listenFinishedReminders = () => {
+        let reminderTitle;
+        const priorityButton = document.querySelectorAll(".priority");
 
-        
+        priorityButton.forEach(element => element.addEventListener("click", ()=> {
+            reminderTitle = element.nextElementSibling.textContent;
+            currentProject.deleteReminder(reminderTitle);
+            currentProject.itemCounter--;
+            removeReminders(element);
+        }));
     };
 
     const projectButton = document.querySelector("#add-project");
