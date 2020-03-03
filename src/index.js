@@ -1,5 +1,5 @@
-import { renderProjectTitles, renderProjectContents, createReminderInput } from "./page-layout.js";
-import { removeReminders } from "./removeReminders.js";
+import { renderProjectTitles, renderProjectContents } from "./page-layout.js";
+import { createReminderInput, removeReminders } from "./Reminders.js";
 
 const Reminder = (title, priority="low", description, dueDate) => {
     const getName = () => title;
