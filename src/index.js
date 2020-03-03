@@ -20,12 +20,14 @@ const Project = (title) => {
     // create or add reminder object to array
     const addReminder = (reminder) => {
         todoItems.push(reminder);
-    }
+        itemCounter++;
+    };
 
     const deleteReminder = (reminder) => {
         let index = todoItems.indexOf(reminder.title);
         todoItems.pop(index);
-    }
+        itemCounter--;
+    };
 
     return {title, todoItems, itemCounter ,addReminder, deleteReminder}
 };
@@ -39,8 +41,9 @@ const controller = (() => {
     const selectProject = () => {
         currentProject = projectList.filter(item => item.title == projectName)[0]
         renderProjectContents(currentProject);
+        listenFinishedReminders();
         return currentProject
-    }
+    };
  
     const listenProjectNames = () => {
         const sideBar = document.querySelectorAll(".project-item");
@@ -49,8 +52,7 @@ const controller = (() => {
             selectProject();
             return projectName
         }));
-
-    }
+    };
     
     const newProject = () => {
 
@@ -74,8 +76,7 @@ const controller = (() => {
 
         const addReminder = () => {
             if (taskItem.value != "") {
-                currentProject.todoItems.push(Reminder(taskItem.value, priorityStatus));
-                currentProject.itemCounter++;
+                currentProject.addReminder(Reminder(taskItem.value, priorityStatus))
             }
             reminderButton.disabled = false; 
             renderProjectContents(currentProject);
@@ -106,7 +107,6 @@ const controller = (() => {
         priorityButton.forEach(element => element.addEventListener("click", ()=> {
             reminderTitle = element.nextElementSibling.textContent;
             currentProject.deleteReminder(reminderTitle);
-            currentProject.itemCounter--;
             removeReminders(element);
         }));
     };
