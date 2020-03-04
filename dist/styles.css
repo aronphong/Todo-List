@@ -1,6 +1,7 @@
 * {
     margin: 0px;
     padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body, html {
@@ -9,29 +10,34 @@ body, html {
 
 #container {
     height: 100%;
+    display: flex;
+}
+
+#content {
+    height: 100%;
     width: 100%;
+    background-color: snow;
 }
 
 #side-bar {
     height: 100%;
-    width: 400px;
-    background-color: lightgray;
-    /* position: fixed; */
+    flex-basis: 400px;
+    padding: 10px;
+    background-color: ghostwhite;
     float: left;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 2px solid orange;
-    padding-top: 10px;
+    border-right: 2px solid lightgray;
 }
 
 .project-item {
-    height: 65px;
-    width: 90%;
+    height: 60px;
+    width: 85%;
     padding-left: 15px;
-    background-color: whitesmoke;
-    border: 1px solid black;
-    border-radius: 12px;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 8px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -50,11 +56,105 @@ body, html {
 
 }
 
-#content {
-    height: 100%;
-    width: 100%;
+.project-item:hover {
+    background-color: lightgray;
+}
+
+#selected-project {
+    background-color: lightgray;
 }
 
 button {
     text-align: center;
 }
+
+#new-task {
+    left: 400px;
+    bottom: 10px;
+    position: absolute;
+}
+
+#add-reminder:hover {
+    background-color: lightcoral;
+}
+
+#add-reminder {
+    outline: none;
+    border: 1px solid lightgray;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: snow;
+    font-size: 1.1em;
+    transition: 0.6s;
+}
+
+#project-title {
+    width: 100%;
+    margin-left: 5px;
+}
+
+#new-project {
+    left: 10px;
+    position: absolute;
+    bottom: 10px;
+}
+
+#current-items ul {
+    list-style: none;
+    margin-left: 20px;
+}
+
+#current-items li {
+    font-size: 1.2em;
+    padding-top: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+    display: flex;
+    align-items: center;
+}
+
+#current-title {
+    margin: 20px;
+}
+
+#task-item {
+    width: 90%;
+    font-size: 1.2em;
+    background-color: snow;
+    outline: none;
+    border: 0;
+}
+
+.high {
+    background-color: red;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 100%;
+    border: none;
+}
+
+.medium {
+    background-color: sandybrown;
+    padding: 10px;
+    border-radius: 100%;
+    margin-right: 10px;
+    border: none;
+}
+
+.low {
+    background-color: green;
+    padding: 10px;
+    border-radius: 100%;
+    margin-right: 10px;
+    border: none;
+}
+
+.priority {
+    transition: 0.3s;
+    opacity: 1;
+}
+
+.priority:hover {
+    opacity: 0.3;
+}
+
